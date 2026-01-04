@@ -202,7 +202,7 @@ function importOk(){
     // 空でOKされたら「名簿未入力状態」へ（＝Initialize相当）
     applyNewRoster([]);
     closeImport();
-    showToast('Name list cleared.');
+    showToast('Names list cleared.');
     return;
   }
 
@@ -257,7 +257,7 @@ function doResetOnly(){
 
 function draw(){
   if (!hasRoster()){
-    showToast('Import the name list.');
+    showToast('Import the names list.');
     return;
   }
   if (state.remainingIds.length === 0){
@@ -357,7 +357,7 @@ function alignStageToViewportCenter(){
 
 function renderHintText(){
   if (!hasRoster()){
-    return { mode: 'text', text: 'Import the name list.' };
+    return { mode: 'text', text: 'Import the names list.' };
   }
   if (state.remainingIds.length === 0){
     return { mode: 'text', text: 'finished!' };
