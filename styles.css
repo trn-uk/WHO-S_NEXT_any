@@ -542,11 +542,14 @@ button:focus-visible, input:focus-visible, textarea:focus-visible{
     width: min(720px, 70vw);
     padding: 22px;
   }
+  .stage{
+  transform: translateY(-50px);
+  }
   .stageHint{
   margin-top: 10px;
   } 
   .side{
-  transform: translateY(-10px);
+  transform: translateY(-5px);
   }
   
   /* START表示中：縦スクロールを禁止 */
