@@ -1,5 +1,7 @@
 # WHO’S NEXT?
 
+![UI](assets/UI_screenshot.png)
+
 **WHO’S NEXT?** は、名前リストを入力するだけで
 **順番をランダムに・公平に決められる Web アプリ** です。
 
@@ -77,7 +79,9 @@ David
 
 ---
 
-## リセットについて（重要）
+## リセットについて
+
+![resetbutton](assets/resetbutton_screenshot.png)
 
 画面左上の **重なった四角のマーク** がリセットボタンです。
 押すと以下の選択肢が表示されます。
