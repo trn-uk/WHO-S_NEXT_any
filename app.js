@@ -488,6 +488,9 @@ function render(){
   renderImportButton();
   renderHistory();
   renderCenter();
+
+  document.body.classList.toggle('is-start', state.screen === 'START');
+  document.body.classList.toggle('is-result', state.screen === 'RESULT');
 }
 
 /* ========= Events ========= */
