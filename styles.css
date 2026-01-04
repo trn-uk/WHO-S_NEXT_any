@@ -543,7 +543,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible{
   margin-top: 10px;
   } 
   .side{
-  transform: translateY(-30px);
+  transform: translateY(-10px);
   }
 }
 
