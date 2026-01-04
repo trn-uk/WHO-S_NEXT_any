@@ -2,7 +2,7 @@
   --bg:#ffffff;
   --ac:#c90000;
   --text:var(--ac);
-  --shadow: 0 10px 30px rgba(0,0,0,.01);
+  --shadow: 0 10px 30px rgba(0,0,0,.00);
   --radius: 18px;
   --fade-ms: 260ms;
 
