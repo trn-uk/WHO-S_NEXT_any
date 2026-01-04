@@ -490,6 +490,7 @@ function renderCenter(){
     stage.style.transform = 'translateY(0px)';
   } else {
   requestAnimationFrame(alignStageToViewportCenter);
+  } 
 }
 
 function render(){
