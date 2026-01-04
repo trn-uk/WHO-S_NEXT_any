@@ -539,6 +539,13 @@ button:focus-visible, input:focus-visible, textarea:focus-visible{
   .pickName{
     font-size: clamp(18px, 5vw, 22px);
   }
+  .modal{
+    width: min(720px, 70vw);
+    padding: 22px;
+  }
+  .stage{
+    transform: translateY(-15px);
+  }
 }
 
 @media (max-width: 420px){
