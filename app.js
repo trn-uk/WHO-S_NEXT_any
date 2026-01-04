@@ -332,20 +332,25 @@ function getColsForPick(n){
   return 5;
 }
 
-/* ステージを縦中央へ（ヘッダー被り防止つき） */
 function alignStageToViewportCenter(){
   const stage = document.getElementById('stage');
   if (!stage) return;
+
+  const isMobileLayout = window.matchMedia('(max-width: 920px)').matches;
+
+  if (isMobileLayout && state.screen === 'START'){
+    stage.style.transform = 'translateY(0px)';
+    return;
+  }
 
   stage.style.transform = 'translateY(0px)';
 
   const r = stage.getBoundingClientRect();
   const stageCenterY = r.top + r.height / 2;
 
-  const isMobileLayout = window.matchMedia('(max-width: 920px)').matches;
   const liftPx = isMobileLayout ? 80 : 0;
-
   const viewportCenterY = (window.innerHeight / 2) - liftPx;
+
   let delta = viewportCenterY - stageCenterY;
 
   const header = document.querySelector('header');
@@ -480,6 +485,10 @@ function renderCenter(){
   stage.appendChild(hint);
 
   centerPanel.appendChild(stage);
+  const isMobileLayout = window.matchMedia('(max-width: 920px)').matches;
+  if (isMobileLayout && state.screen === 'START'){
+    stage.style.transform = 'translateY(0px)';
+  } else {
   requestAnimationFrame(alignStageToViewportCenter);
 }
 
