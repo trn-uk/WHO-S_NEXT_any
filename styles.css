@@ -548,6 +548,16 @@ button:focus-visible, input:focus-visible, textarea:focus-visible{
   .side{
   transform: translateY(-10px);
   }
+  
+  /* START表示中：縦スクロールを禁止 */
+  body.is-start .center{
+    overflow-y: hidden;
+  }
+
+  /* RESULT表示中：縦スクロールOK */
+  body.is-result .center{
+    overflow-y: auto;
+  }
 }
 
 @media (max-width: 420px){
