@@ -1,0 +1,531 @@
+:root{
+  --bg:#ffffff;
+  --ac:#c90000;
+  --text:var(--ac);
+  --shadow: 0 10px 30px rgba(0,0,0,.01);
+  --radius: 18px;
+  --fade-ms: 260ms;
+
+  --main-w: 380px;
+  --main-h: min(100px, 35vh);
+
+  --grid-gap: 10px;
+  --footer-safe: 96px;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color var(--fade-ms) ease-out, color var(--fade-ms) ease-out;
+}
+
+.app{ min-height:100%; display:flex; flex-direction:column; }
+
+/* header：左端＝PICK左端(18px) に合わせる */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  padding:16px 18px;
+  position: relative;
+  z-index: 50;
+}
+
+.brand{ display:flex; align-items:center; gap:10px; user-select:none; }
+
+/* リセットボタン（重なる2正方形） */
+.resetBtn{
+  width:38px; height:38px;
+  border-radius:0; border:0;
+  display:grid; place-items:center;
+  cursor:pointer; background:transparent;
+  position:relative;
+  transition: transform 120ms ease-out;
+}
+.resetBtn::before,
+.resetBtn::after{
+  content:"";
+  position:absolute;
+  width:20px; height:20px;
+  background: var(--ac);
+}
+.resetBtn::before{ left:3px; top:3px; }
+.resetBtn::after{ right:3px; bottom:3px; }
+.resetBtn:hover{ transform: translateY(-1px); }
+.resetBtn:active{ transform: translateY(0px) scale(.98); }
+
+main{
+  flex:1;
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap: 18px;
+  padding: 0 18px calc(18px + var(--footer-safe));
+  align-items:stretch;
+}
+
+@media (max-width: 920px){
+  main{ grid-template-columns: 1fr; }
+}
+
+.panel{
+  border:0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: var(--bg);
+  transition: background-color var(--fade-ms) ease-out;
+}
+
+.center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap: 18px;
+  padding: 18px;
+  position:relative;
+  overflow:hidden;
+  min-height: 100%;
+}
+
+.stage{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap: 14px;
+  will-change: transform;
+}
+
+/* WHO'S NEXT?（Alata） */
+.stageTitle{
+  font-family: "Alata", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+  letter-spacing:.06em;
+  font-size: 50px; /* ←指定変更 */
+  margin-bottom: 6px;
+  text-align:center;
+}
+
+.mainCard{
+  width: var(--main-w);
+  height: var(--main-h);
+  border-radius: 0;
+  border: 1.5px solid var(--ac);
+  background: transparent;
+  color: var(--ac);
+  font-weight: 900;
+  font-size: 44px;
+  letter-spacing: .04em;
+  cursor:pointer;
+  transition: transform 120ms ease-out, background-color var(--fade-ms) ease-out, color var(--fade-ms) ease-out;
+  display:grid;
+  place-items:center;
+  user-select:none;
+  text-align:center;
+  padding: 0 14px;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* START（Alata） */
+.startBtn{
+  font-family: "Alata", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.startBtn:hover{
+  background: var(--ac);
+  color: var(--bg);
+  transform: translateY(-2px);
+}
+.startBtn:active{ transform: translateY(0px) scale(.99); }
+.startBtn:disabled{
+  opacity: .45;
+  cursor:not-allowed;
+  transform:none;
+}
+
+.resultArea{
+  width: 100%;
+  padding: 0;
+  border-radius: 0;
+  border: 0 dashed var(--ac);
+  cursor:pointer;
+  user-select:none;
+  text-align:center;
+}
+.resultArea:hover{ transform:none; }
+
+.resultScroller{
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 中央寄せはスクロール内側で */
+.scrollerInner{
+  display:flex;
+  justify-content:center;
+  width: max-content;
+  min-width: 100%;
+}
+
+.cardsGrid{
+  display:grid;
+  gap: var(--grid-gap);
+  grid-auto-flow: column; /* 上→下→右 */
+  justify-content:center;
+  align-items:center;
+  width: max-content;
+}
+
+.cardsGrid.scale80{
+  transform: scale(0.8);
+  transform-origin: top center;
+}
+
+.nameCard{
+  background: color-mix(in oklab, var(--ac) 90%, transparent);
+  color: var(--bg);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+
+  opacity: 0;
+  transform: translateY(6px);
+  animation: fadeIn var(--fade-ms) ease-out forwards;
+}
+
+.pickNo{
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: .08em;
+  opacity: .9;
+  line-height: 1;
+  transform: translateY(-4px);
+}
+
+.pickName{
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: .03em;
+  line-height: 1.15;
+  padding: 0 10px;
+  max-width: 100%;
+  overflow:hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes fadeIn{ to{ opacity:1; transform: translateY(0px); } }
+
+/* ヒント（復活） */
+.stageHint{
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: .85;
+  text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+}
+
+/* リセットマーク（ヒント用：半分サイズ） */
+.miniMark{
+  width:19px;
+  height:19px;
+  position:relative;
+  display:inline-block;
+  flex: 0 0 auto;
+}
+.miniMark::before,
+.miniMark::after{
+  content:"";
+  position:absolute;
+  width:10px;
+  height:10px;
+  background: var(--ac);
+}
+.miniMark::before{ left:1px; top:1px; }
+.miniMark::after{ right:1px; bottom:1px; }
+
+/* HISTORY */
+.side{
+  padding: 14px;
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+  overflow:hidden;
+  font-size: 0.8em;
+
+  transform: translateY(-50px); /* ←指定変更 */
+}
+
+.sideHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid color-mix(in oklab, var(--ac) 35%, transparent);
+  flex: 0 0 auto;
+}
+
+.sideTitle{
+  font-weight:200;
+  letter-spacing:.02em;
+}
+
+.importBtn{
+  border: 1px solid var(--ac);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  letter-spacing:.06em;
+  cursor:pointer;
+  transition: background-color var(--fade-ms) ease-out, color var(--fade-ms) ease-out, border-color var(--fade-ms) ease-out;
+  user-select:none;
+}
+.importBtn.stateEmpty{
+  background: var(--ac);
+  color: var(--bg);
+}
+.importBtn.stateReady{
+  background: var(--bg);
+  color: var(--ac);
+}
+
+.history{
+  overflow:auto;
+  padding-right:6px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.row{
+  display:flex;
+  gap: 10px;
+  align-items:center;
+  padding: 8px 8px;
+  border-radius: 0;
+  border: 1px solid color-mix(in oklab, var(--ac) 25%, transparent);
+  margin-bottom: 8px;
+  background: color-mix(in oklab, var(--bg) 94%, transparent);
+}
+
+.no{
+  width: 44px;
+  text-align:right;
+  font-weight: 200;
+  opacity: .75;
+}
+
+.name{
+  flex:1;
+  font-weight: 400;
+  letter-spacing: .02em;
+  color: color-mix(in oklab, var(--ac) 92%, #000);
+}
+
+.emptyDash{
+  color: color-mix(in oklab, var(--ac) 75%, #000);
+  font-weight: 300;
+  opacity: .85;
+}
+
+/* Footer fixed */
+footer{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 18px 18px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap: 12px;
+  pointer-events:none;
+  z-index: 30;
+}
+
+.pickWrap{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  border-radius: 999px;
+  padding: 10px 14px;
+  box-shadow: var(--shadow);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  pointer-events:auto;
+}
+
+.pickLabel{
+  font-weight: 300;
+  letter-spacing:.04em;
+}
+
+input[type="number"]{
+  width: 55px;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 8px 10px;
+  border-radius: 0;
+  border: 1px solid var(--ac);
+  color: var(--ac);
+  background: transparent;
+  outline:none;
+}
+
+.status{
+  font-size: 12px;
+  opacity: .85;
+  text-align:right;
+  pointer-events:none;
+}
+
+/* Toast */
+.toast{
+  position: fixed;
+  left: 18px;
+  bottom: 78px;
+  max-width: min(520px, calc(100% - 36px));
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 2px solid var(--ac);
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  box-shadow: var(--shadow);
+  font-size: 12px;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events:none;
+  transition: opacity 160ms ease-out, transform 160ms ease-out;
+  z-index: 60;
+}
+.toast.show{ opacity:1; transform: translateY(0px); }
+
+button:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline: 3px solid color-mix(in oklab, var(--ac) 55%, transparent);
+  outline-offset: 2px;
+}
+
+/* Modal */
+.modalOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.25);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding: 18px;
+  z-index: 80;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width: min(640px, 100%);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.modalHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid color-mix(in oklab, var(--ac) 35%, transparent);
+}
+.modalTitle{
+  font-weight: 800;
+  letter-spacing:.03em;
+}
+.modalClose{
+  border: 1px solid var(--ac);
+  background: transparent;
+  color: var(--ac);
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  cursor:pointer;
+}
+
+.modalBody{ padding: 12px 0; }
+.modalHelp{
+  font-size: 12px;
+  opacity: .85;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.importTextarea{
+  width: 100%;
+  border: 1px solid var(--ac);
+  border-radius: 12px;
+  padding: 12px;
+  background: transparent;
+  color: var(--ac);
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.modalFooter{
+  display:flex;
+  justify-content:flex-end;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid color-mix(in oklab, var(--ac) 35%, transparent);
+}
+
+.btnPrimary, .btnGhost{
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor:pointer;
+  border: 1px solid var(--ac);
+  letter-spacing:.04em;
+}
+
+.btnPrimary{
+  background: var(--ac);
+  color: var(--bg);
+}
+.btnGhost{
+  background: transparent;
+  color: var(--ac);
+}
+
+/* Smartphone sizing: 70% width but capped at PC max */
+@media (max-width: 920px){
+  :root{
+    --main-w: min(70vw, 380px);
+    --main-h: min(90px, 30vh);
+  }
+  .stageTitle{
+    font-size: clamp(28px, 7vw, 50px);
+  }
+  .mainCard{
+    font-size: clamp(28px, 9vw, 44px);
+  }
+  .pickName{
+    font-size: clamp(18px, 5vw, 22px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  :root{ --fade-ms: 1ms; }
+  .nameCard{ animation: none; opacity:1; transform:none; }
+  *{ transition-duration: 1ms !important; }
+}
