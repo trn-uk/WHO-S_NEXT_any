@@ -31,7 +31,7 @@ header{
   justify-content:flex-start;
   padding:16px 18px;
   position: relative;
-  z-index: 50;
+  z-index: 30;
 }
 
 .brand{ display:flex; align-items:center; gap:10px; user-select:none; }
@@ -269,7 +269,7 @@ main{
   font-size: 0.8em;
 
   transform: translateY(-50px);
-  z-index: 60; /* header(50)より上へ */
+  z-index: 40;
 }
 
 .sideHeader{
