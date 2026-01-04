@@ -1,6 +1,6 @@
 # WHO’S NEXT?
 
-![UI](assets/UI_screenshot.png)
+![UI](assets/UI_screenshot_any.png)
 
 **WHO’S NEXT?** は、名前リストを入力するだけで
 **順番をランダムに・公平に決められる Web アプリ** です。
