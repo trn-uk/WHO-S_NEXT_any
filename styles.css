@@ -25,6 +25,7 @@ body{
 
 .app{ min-height:100%; display:flex; flex-direction:column; }
 
+/* header：左端＝PICK左端(18px) に合わせる */
 header{
   display:flex;
   align-items:center;
@@ -100,13 +101,14 @@ main{
   will-change: transform;
 }
 
+/* WHO'S NEXT?（Alata） */
 .stageTitle{
   font-family: "Alata", sans-serif;
   font-weight: 400;
   font-style: normal;
 
   letter-spacing:.06em;
-  font-size: 50px;
+  font-size: 50px; /* ←指定変更 */
   margin-bottom: 6px;
   text-align:center;
 }
@@ -170,6 +172,7 @@ main{
   -webkit-overflow-scrolling: touch;
 }
 
+/* 中央寄せはスクロール内側で */
 .scrollerInner{
   display:flex;
   justify-content:center;
@@ -180,7 +183,7 @@ main{
 .cardsGrid{
   display:grid;
   gap: var(--grid-gap);
-  grid-auto-flow: column;
+  grid-auto-flow: column; /* 上→下→右 */
   justify-content:center;
   align-items:center;
   width: max-content;
@@ -229,6 +232,7 @@ main{
 
 @keyframes fadeIn{ to{ opacity:1; transform: translateY(0px); } }
 
+/* ヒント（復活） */
 .stageHint{
   margin-top: 30px;
   font-size: 12px;
@@ -240,7 +244,7 @@ main{
   gap: 8px;
 }
 
-/* リセットマーク（ヒント用） */
+/* リセットマーク（ヒント用：半分サイズ） */
 .miniMark{
   width:19px;
   height:19px;
@@ -268,7 +272,7 @@ main{
   overflow:hidden;
   font-size: 0.8em;
 
-  transform: translateY(-50px);
+  transform: translateY(-50px); /* ←指定変更 */
   z-index: 60; /* header(50)より上へ */
 }
 
