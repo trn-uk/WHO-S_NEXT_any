@@ -362,7 +362,7 @@ function renderHintText(){
   if (state.remainingIds.length === 0){
     return { mode: 'text', text: 'finished!' };
   }
-  return { mode: 'mark', text: 'For initialization or reset, press', tail: '.' };
+  return { mode: 'mark', text: 'For initialization or reset, click', tail: '.' };
 }
 
 function renderCenter(){
