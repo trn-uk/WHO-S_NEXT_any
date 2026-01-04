@@ -338,31 +338,20 @@ function alignStageToViewportCenter(){
 
   const isMobileLayout = window.matchMedia('(max-width: 920px)').matches;
 
-  if (isMobileLayout && state.screen === 'START'){
+  // ★スマホでは一切センタリングしない
+  if (isMobileLayout){
     stage.style.transform = 'translateY(0px)';
     return;
   }
 
+  // ---- 以下はPC専用 ----
   stage.style.transform = 'translateY(0px)';
 
   const r = stage.getBoundingClientRect();
   const stageCenterY = r.top + r.height / 2;
+  const viewportCenterY = window.innerHeight / 2;
 
-  const liftPx = isMobileLayout ? 80 : 0;
-  const viewportCenterY = (window.innerHeight / 2) - liftPx;
-
-  let delta = viewportCenterY - stageCenterY;
-
-  const header = document.querySelector('header');
-  if (header){
-    const hr = header.getBoundingClientRect();
-    const safeTop = hr.bottom + 8;
-    const stageTopAfter = r.top + delta;
-    if (stageTopAfter < safeTop){
-      delta += (safeTop - stageTopAfter);
-    }
-  }
-
+  const delta = viewportCenterY - stageCenterY;
   stage.style.transform = `translateY(${delta}px)`;
 }
 
@@ -400,6 +389,7 @@ function renderCenter(){
     btn.disabled = !hasRoster() || state.remainingIds.length === 0;
     btn.addEventListener('click', draw);
     stage.appendChild(btn);
+
   } else {
     const area = document.createElement('div');
     area.className = 'resultArea';
@@ -421,18 +411,21 @@ function renderCenter(){
     grid.style.gridTemplateColumns = `repeat(${cols}, var(--main-w))`;
     grid.style.gridTemplateRows = `repeat(${rows}, var(--main-h))`;
 
+    // PICK>=4 なら常に 80% スケール + 横スクロールで全体を見せる
     if (n >= 4){
       grid.classList.add('scale80');
     } else {
       scroller.style.overflowX = 'hidden';
     }
 
+    // 今回の抽選が「全体で何番目か」（0-based before this pick）
     const baseIndex = state.pickedHistoryIds.length - state.currentPickIds.length;
 
     state.currentPickIds.forEach((id, idx) => {
       const c = document.createElement('div');
       c.className = 'mainCard nameCard';
 
+      // ほんの少しのラグ（列が多いほどわずかに短く）
       const baseLag = 55;
       const factor = Math.max(28, baseLag - cols * 6);
       c.style.animationDelay = `${idx * factor}ms`;
@@ -447,7 +440,6 @@ function renderCenter(){
 
       c.appendChild(no);
       c.appendChild(nm);
-
       grid.appendChild(c);
     });
 
@@ -456,10 +448,11 @@ function renderCenter(){
     area.appendChild(scroller);
     stage.appendChild(area);
 
+    // 横スクロールの初期位置を左端へ
     requestAnimationFrame(() => { scroller.scrollLeft = 0; });
   }
 
-  /* Hint (復活) */
+  // ===== Hint (復活) =====
   const hint = document.createElement('div');
   hint.className = 'stageHint';
 
@@ -485,13 +478,11 @@ function renderCenter(){
   stage.appendChild(hint);
 
   centerPanel.appendChild(stage);
-  const isMobileLayout = window.matchMedia('(max-width: 920px)').matches;
-  if (isMobileLayout && state.screen === 'START'){
-    stage.style.transform = 'translateY(0px)';
-  } else {
+
+  // PC はセンタリング、スマホは transform=0（align側で分岐）
   requestAnimationFrame(alignStageToViewportCenter);
-  } 
 }
+
 
 function render(){
   applyTheme();
