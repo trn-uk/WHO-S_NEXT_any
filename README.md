@@ -83,7 +83,7 @@ David
 
 ![resetbutton](assets/resetbutton_screenshot.png)
 
-画面左上の **重なった四角のマーク** がリセットボタンです。
+画面左上のアイコンがリセットボタンです。
 押すと以下の選択肢が表示されます。
 
 ### Initialize（初期化）
